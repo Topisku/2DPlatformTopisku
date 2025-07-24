@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
-        animator.SetBool("isWallSLiding", isWallSliding);
+        animator.SetBool("isWallSliding", isWallSliding);
     } 
 
     public void Move(InputAction.CallbackContext context)
