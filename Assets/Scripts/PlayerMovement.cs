@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     bool isFacingRight = true;
+    public ParticleSystem smokeFX;
 
     [Header("Movement")]
     public float movespeed = 5f;
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("GroundCheck")]
     public Transform groundCheckPos;
-    public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
+    public Vector2 groundCheckSize = new Vector2(0.49f, 0.03f);
     public LayerMask groundLayer;
     bool isGrounded;
 
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("WallCheck")]
     public Transform wallCheckPos;
-    public Vector2 wallCheckSize = new Vector2(0.5f, 0.5f);
+    public Vector2 wallCheckSize = new Vector2(0.49f, 0.03f);
     public LayerMask wallLayer;
 
     [Header("WallMovement")]
@@ -76,14 +77,14 @@ public class PlayerMovement : MonoBehaviour
                 //Hold down jump = full height
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
                 jumpsRemaining--;
-                animator.SetTrigger("jump");
+                JumpFX();
             }
             else if (context.canceled)
             {
                 //Light tap of jump = half height
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
                 jumpsRemaining--;
-                animator.SetTrigger("jump");
+                JumpFX();
             }
         }
 
@@ -93,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
             isWallJumping = true;
             rb.linearVelocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
             wallJumpTimer = 0f;
-            animator.SetTrigger("jump");
+            JumpFX();
 
             //Force flip
             if (transform.localScale.x != wallJumpDirection)
@@ -106,6 +107,12 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(CancelWallJump), wallJumpTime + 0.1f);
         }
+    }
+
+    private void JumpFX()
+    {
+        animator.SetTrigger("jump");
+        smokeFX.Play();
     }
 
     private void GroundCheck()
@@ -182,6 +189,11 @@ public class PlayerMovement : MonoBehaviour
             Vector3 ls = transform.localScale;
             ls.x *= -1f;
             transform.localScale = ls;
+
+            if (rb.linearVelocity.y == 0f)
+            {
+                smokeFX.Play();
+            }
         }
     }
 
