@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
+  - Item
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 3721386981
+    locked: 0
+  - name: Playe
+    uniqueID: 1247271441
     locked: 0
   m_RenderingLayers:
   - Default

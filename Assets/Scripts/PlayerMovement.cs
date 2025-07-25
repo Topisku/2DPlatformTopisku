@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isWallJumping = true;
             rb.linearVelocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
-            wallJumpTimer = 0f;
+            wallJumpTimer = 0;
             JumpFX();
 
             //Force flip
